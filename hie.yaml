@@ -1,0 +1,13 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:aeson-generic-ts"
+
+    - path: "test"
+      component: "aeson-generic-ts:test:aeson-generic-ts-test"
+
+    - path: "data"
+      component: "aeson-generic-ts:test:aeson-generic-ts-test"
+
+    - path: "./"
+      component: "aeson-generic-ts:test:doctest"

@@ -1,1 +1,55 @@
-.stack-work
+### Haskell
+dist
+dist-*
+cabal-dev
+*.o
+*.hi
+*.chi
+*.chs.h
+*.dyn_o
+*.dyn_hi
+*.prof
+*.aux
+*.hp
+*.eventlog
+*.pem
+.virtualenv
+.hsenv
+.hpc
+.cabal-sandbox/
+cabal.sandbox.config
+cabal.config
+cabal.project.local
+.HTF/
+# Stack
+.stack-work/
+stack.yaml.lock
+stack.lock
+src/Security.hs
+### IDE/support
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+*~
+tags
+
+# IntellijIDEA
+.idea/
+.ideaHaskellLib/
+*.iml
+
+# Atom
+.haskell-ghc-mod.json
+
+# VS
+.vscode/
+
+# Emacs
+*#
+.dir-locals.el
+TAGS
+
+# other
+.DS_Store
