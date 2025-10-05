@@ -1,102 +1,106 @@
-cabal-version: 1.12
+cabal-version:      3.4
 
--- This file has been generated from package.yaml by hpack version 0.31.1.
+-- This file has been generated from package.yaml by hpack version 0.38.1.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3a83ba67f03edf6df43207a2e85d25800ccbc9f9661a1871ab5dc781f1d4d74d
+-- hash: a54ac8156d5ff63ad0f637c9c6e4b9138d99893fd92a7f5d526dc2ac5d5427fe
 
-name:           aeson-generic-ts
-version:        0.1.0.0
-category:       Web
-homepage:       https://github.com/smaccoun/aeson-generic-ts#readme
-author:         Steven MacCoun
-maintainer:     theraccoun@gmail.com
-copyright:      2018 Steven MacCoun
-license:        BSD3
-license-file:   LICENSE
-build-type:     Simple
-extra-source-files:
-    README.md
+name:               aeson-generic-ts
+version:            0.1.0.1
+category:           Web
+homepage:           https://github.com/smaccoun/aeson-generic-ts#readme
+author:             Steven MacCoun
+maintainer:         theraccoun@gmail.com
+copyright:          2018 Steven MacCoun
+license:            BSD-3-Clause
+license-file:       LICENSE
+build-type:         Simple
+extra-source-files: README.md
+
+common fast
+  default-language:   GHC2024
+  default-extensions:
+    BlockArguments
+    ConstraintKinds
+    DataKinds
+    DefaultSignatures
+    DeriveAnyClass
+    DeriveGeneric
+    DerivingStrategies
+    DerivingVia
+    FlexibleContexts
+    FlexibleInstances
+    GeneralizedNewtypeDeriving
+    KindSignatures
+    MultiParamTypeClasses
+    NoImplicitPrelude
+    NoListTuplePuns
+    NoStarIsType
+    OverloadedLabels
+    OverloadedRecordDot
+    OverloadedStrings
+    PackageImports
+    RecordWildCards
+    ScopedTypeVariables
+    StandaloneDeriving
+    StrictData
+    TypeFamilies
+    TypeOperators
+    UndecidableInstances
+    ViewPatterns
+
+  ghc-options:
+    -Wall -Wcompat -Werror=unused-imports -Widentities
+    -Wincomplete-record-updates -Wincomplete-uni-patterns
+    -Wno-unticked-promoted-constructors -Wno-unused-do-bind
+    -Wpartial-fields -Wunused-packages
 
 library
+  import:          fast
   exposed-modules:
-      Typescript
-      Typescript.Internal.Flavors.FpTs
-      Typescript.Internal.Flavors.Vanilla
-      Typescript.Internal.Intermediate.Generic
-      Typescript.Internal.Intermediate.Lang
-      Typescript.Internal.Output.Foreign.Class
-      Typescript.Internal.Output.Foreign.TSDefaults
-      Typescript.Internal.Output.PrintForeign
-      Typescript.TH.GenInstances
-  other-modules:
-      Paths_aeson_generic_ts
-  hs-source-dirs:
-      src
-  default-extensions: ConstraintKinds DataKinds DeriveGeneric FlexibleContexts FlexibleInstances KindSignatures MultiParamTypeClasses OverloadedStrings RecordWildCards ScopedTypeVariables StandaloneDeriving TypeFamilies UndecidableInstances DeriveAnyClass
+    Typescript
+    Typescript.Internal.Flavors.FpTs
+    Typescript.Internal.Flavors.Vanilla
+    Typescript.Internal.Intermediate.Generic
+    Typescript.Internal.Intermediate.Lang
+    Typescript.Internal.Output.Foreign.Class
+    Typescript.Internal.Output.Foreign.TSDefaults
+    Typescript.Internal.Output.PrintForeign
+    Typescript.TH.GenInstances
+
+  hs-source-dirs:  src
   build-depends:
-      aeson
-    , base >=4.7 && <5
-    , exceptions
+    , base              >=4.7 && <5
+    , ghc-prim
     , template-haskell
     , text
-    , th-abstraction
     , th-reify-many
-  default-language: Haskell2010
 
 test-suite aeson-generic-ts-test
-  type: exitcode-stdio-1.0
-  main-is: Spec.hs
+  import:         fast
+  type:           exitcode-stdio-1.0
+  main-is:        Spec.hs
   other-modules:
-      FpTsSpec
-      VanillaSpec
-      Typescript
-      Typescript.Internal.Flavors.FpTs
-      Typescript.Internal.Flavors.Vanilla
-      Typescript.Internal.Intermediate.Generic
-      Typescript.Internal.Intermediate.Lang
-      Typescript.Internal.Output.Foreign.Class
-      Typescript.Internal.Output.Foreign.TSDefaults
-      Typescript.Internal.Output.PrintForeign
-      Typescript.TH.GenInstances
-      BasicExamples
-      Paths_aeson_generic_ts
-  hs-source-dirs:
-      test
-      src
-      data
-  default-extensions: ConstraintKinds DataKinds DeriveGeneric FlexibleContexts FlexibleInstances KindSignatures MultiParamTypeClasses OverloadedStrings RecordWildCards ScopedTypeVariables StandaloneDeriving TypeFamilies UndecidableInstances DeriveAnyClass
-  ghc-options: -pgmL markdown-unlit
+    BasicExamples
+    FpTsSpec
+    VanillaSpec
+
+  hs-source-dirs: test data
   build-depends:
-      aeson
-    , base >=4.7 && <5
-    , exceptions
+    , aeson-generic-ts
+    , base              >=4.7 && <5
+    , ghc-prim
     , hspec
-    , hspec-discover
-    , markdown-unlit
-    , template-haskell
     , text
-    , th-abstraction
-    , th-reify-many
-  default-language: Haskell2010
 
 test-suite doctest
-  type: exitcode-stdio-1.0
-  main-is: DocTest.hs
-  other-modules:
-      Paths_aeson_generic_ts
-  hs-source-dirs:
-      ./.
-  default-extensions: ConstraintKinds DataKinds DeriveGeneric FlexibleContexts FlexibleInstances KindSignatures MultiParamTypeClasses OverloadedStrings RecordWildCards ScopedTypeVariables StandaloneDeriving TypeFamilies UndecidableInstances DeriveAnyClass
+  import:         fast
+  type:           exitcode-stdio-1.0
+  main-is:        DocTest.hs
+  hs-source-dirs: ./
   build-depends:
-      Glob
-    , aeson
-    , base >=4.7 && <5
+    , base      >=4.7 && <5
     , doctest
-    , exceptions
-    , template-haskell
-    , text
-    , th-abstraction
-    , th-reify-many
-  default-language: Haskell2010
+    , ghc-prim
+    , Glob

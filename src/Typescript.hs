@@ -10,8 +10,7 @@ module Typescript
 
 import           Typescript.Internal.Flavors.FpTs
 import           Typescript.Internal.Flavors.Vanilla
-import           Typescript.Internal.Intermediate.Generic ( TypescriptType(..)
-                                                          )
+import           Typescript.Internal.Intermediate.Generic (TypescriptType (..))
 import           Typescript.Internal.Intermediate.Lang
 import           Typescript.Internal.Output.Foreign.Class
-import           Typescript.Internal.Output.PrintForeign
+import           Typescript.Internal.Output.PrintForeign  (foreignTypescript, mkTypescriptDeclaration)

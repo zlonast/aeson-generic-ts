@@ -1,28 +1,35 @@
-{-# LANGUAGE DerivingStrategies #-}
-{-# LANGUAGE TemplateHaskell #-}
+-- {-# LANGUAGE TemplateHaskell #-}
 
-module FpTsSpec where
+module FpTsSpec (spec) where
 
-import           Data.Proxy
-import           Data.Text                                ( Text )
+import           Data.Function                            (($))
+import           Data.Maybe                               (Maybe)
+import           Data.Proxy                               (Proxy (..))
+import           Data.Text                                (Text)
 
-import           GHC.Generics
+import           GHC.Generics                             (Generic)
 
-import           Test.Hspec
+import           Test.Hspec                               (Spec, describe, it, shouldBe)
 
-import           Typescript.Internal.Flavors.FpTs
-import           Typescript.Internal.Intermediate.Generic
-import           Typescript.Internal.Output.PrintForeign
-import           Typescript.TH.GenInstances
+import           Typescript.Internal.Flavors.FpTs         (FpTs)
+import           Typescript.Internal.Intermediate.Generic (TypescriptType)
+import           Typescript.Internal.Output.PrintForeign  (mkTypescriptDeclaration)
+-- import           Typescript.TH.GenInstances               (deriveTypescriptTypesRecursively)
 
 newtype AnOption = AnOption (Maybe Text)
-    deriving ( Generic )
+    deriving stock (Generic)
+    deriving anyclass (TypescriptType)
+
+-- deriving anyclass instance (TypescriptType AnOption)
 
 newtype F =
   F { f1 :: AnOption }
-    deriving ( Generic )
+    deriving stock (Generic)
+    deriving anyclass (TypescriptType)
 
-$(deriveTypescriptTypesRecursively [ ''F ])
+-- deriving anyclass instance (TypescriptType F)
+
+-- $(deriveTypescriptTypesRecursively [ ''F ])
 
 spec :: Spec
 spec = describe "option_type" $ do

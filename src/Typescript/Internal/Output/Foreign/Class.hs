@@ -1,18 +1,17 @@
-{-# LANGUAGE DeriveFunctor #-}
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE DeriveTraversable #-}
-
 module Typescript.Internal.Output.Foreign.Class where
 
-import           Data.Text
+import           Data.Maybe   (Maybe)
+import           Data.Text    (Text)
 
-import           GHC.Generics
+import           GHC.Generics (Generic)
+
+import           Text.Show    (Show)
 
 {-|
   Instantiate this class for all types that will be printed out as Text.
 -}
 class IsForeignType t where
-    toForeignType :: t -> ForeignType
+  toForeignType :: t -> ForeignType
 
 {-|
   A type that represents a reference and a declaration.
@@ -22,23 +21,25 @@ class IsForeignType t where
 > data Foo = Foo {sField    :: Bar}
 > data Bar = Bar {someField :: Int}
 -}
-data ForeignType = ForeignType { refName     :: Text
-                               , declaration :: Text
-                               }
-    deriving ( Generic, Show )
+data ForeignType = ForeignType
+  { refName     :: Text
+  , declaration :: Text
+  }
+  deriving stock (Generic, Show)
 
-data TypescriptOutput = TypescriptOutput { typeOutput    :: ForeignType
-                                         , mbRequiresLib :: Maybe TSLibrary
-                                         }
+data TypescriptOutput = TypescriptOutput
+  { typeOutput    :: ForeignType
+  , mbRequiresLib :: Maybe TSLibrary
+  }
 
 class (IsForeignType t) => OutputsTypescript t where
-    toTypescriptOutput :: t -> TypescriptOutput
+  toTypescriptOutput :: t -> TypescriptOutput
 
 newtype TSLibrary = TSLibrary Text
 
 mkTypescriptOut :: (IsForeignType t) => Maybe TSLibrary -> t -> TypescriptOutput
 mkTypescriptOut mbLib foreignType =
-    TypescriptOutput (toForeignType foreignType) mbLib
+  TypescriptOutput (toForeignType foreignType) mbLib
 
 selfRefForeign :: Text -> ForeignType
 selfRefForeign ref = ForeignType ref ref

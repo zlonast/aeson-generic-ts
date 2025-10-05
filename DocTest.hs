@@ -1,13 +1,19 @@
 module Main (main) where
 
-import System.FilePath.Glob
-import Test.DocTest
+import           Data.Function        (($))
+import           Data.Semigroup       (Semigroup (..))
 
-main :: IO ()
+import           GHC.Tuple            (Unit)
+
+import           System.FilePath.Glob (compile, globDir1)
+import           System.IO            (IO)
+
+import           Test.DocTest         (doctest)
+
+main :: IO Unit
 main = do
   let options =
-        [ "-XOverloadedStrings"
-        , "-XConstraintKinds"
+        [ "-XConstraintKinds"
         , "-XDataKinds"
         , "-XDeriveGeneric"
         , "-XFlexibleContexts"
@@ -20,7 +26,22 @@ main = do
         , "-XStandaloneDeriving"
         , "-XTypeFamilies"
         , "-XUndecidableInstances"
+        , "-XDerivingStrategies"
+        , "-XBlockArguments"
+        , "-XDeriveAnyClass"
+        , "-XDerivingVia"
+        , "-XGeneralizedNewtypeDeriving"
+        , "-XNoListTuplePuns"
+        , "-XNoStarIsType"
+        , "-XOverloadedLabels"
+        , "-XOverloadedRecordDot"
+        , "-XPackageImports"
+        , "-XStrictData"
+        , "-XTypeOperators"
+        , "-XViewPatterns"
+        , "-XDefaultSignatures"
+        , "-XGHC2024"
         ]
 
   paths <- globDir1 (compile "**/*.hs") "src"
-  doctest $ options ++ paths
+  doctest $ options <> paths

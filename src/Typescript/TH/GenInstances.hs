@@ -3,16 +3,23 @@
 
 module Typescript.TH.GenInstances where
 
-import           Language.Haskell.TH
-import           Language.Haskell.TH.ReifyMany
+import           Control.Monad                            (mapM)
 
-import           Typescript.Internal.Intermediate.Generic ( TypescriptType )
+import           Data.Bool                                (Bool (..))
+import           Data.Function                            (const)
+import           Data.Functor                             ((<$>))
+import           Data.List                                (List, concat)
 
-deriveTypescriptTypesRecursively :: [Name] -> Q [Dec]
+import           Language.Haskell.TH                      (Dec, Name, Q, conT)
+import           Language.Haskell.TH.ReifyMany            (reifyManyWithoutInstances)
+
+import           Typescript.Internal.Intermediate.Generic (TypescriptType)
+
+deriveTypescriptTypesRecursively :: List Name -> Q (List Dec)
 deriveTypescriptTypesRecursively nms = do
-    names <- reifyManyWithoutInstances ''TypescriptType nms (const True)
-    concat <$> mapM deriveTSInstance names
+  names <- reifyManyWithoutInstances ''TypescriptType nms (const True)
+  concat <$> mapM deriveTSInstance names
 
-deriveTSInstance :: Name -> Q [Dec]
+deriveTSInstance :: Name -> Q (List Dec)
 deriveTSInstance nm = do
-    [d|deriving instance TypescriptType $(conT nm)|]
+  [d|deriving instance TypescriptType $(conT nm)|]

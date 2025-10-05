@@ -1,15 +1,18 @@
-module VanillaSpec where
+module VanillaSpec (spec) where
 
-import           BasicExamples
+import           BasicExamples                            (ComplexRecord, OneFieldRecord, SampleUnion, SimpleRecord)
 
-import           Data.Proxy
-import           Data.Text                                ( Text )
+import           Data.Function                            (($))
+import           Data.Int                                 (Int)
+import           Data.List                                (List)
+import           Data.Proxy                               (Proxy (..))
+import           Data.Text                                (Text)
 
-import           Test.Hspec
+import           Test.Hspec                               (Spec, describe, it, shouldBe)
 
-import           Typescript.Internal.Flavors.Vanilla
-import           Typescript.Internal.Intermediate.Generic
-import           Typescript.Internal.Output.PrintForeign
+import           Typescript.Internal.Flavors.Vanilla      (Vanilla)
+import           Typescript.Internal.Intermediate.Generic (TypescriptType)
+import           Typescript.Internal.Output.PrintForeign  (mkTypescriptDeclaration)
 
 spec :: Spec
 spec = describe "vanilla_ts" $ do
@@ -17,7 +20,7 @@ spec = describe "vanilla_ts" $ do
         printVanilla (Proxy :: Proxy Int) `shouldBe` "number"
 
     it "works for a list of numbers" $ do
-        printVanilla (Proxy :: Proxy [Int]) `shouldBe` "Array<number>"
+        printVanilla (Proxy :: Proxy (List Int)) `shouldBe` "Array<number>"
 
     describe "it works for records" $ do
         it "works for a simple record type" $ do
