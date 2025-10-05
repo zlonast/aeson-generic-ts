@@ -9,12 +9,14 @@ import           Data.Proxy                            (Proxy (..))
 import           Data.Semigroup                        (Semigroup (..))
 import           Data.Text                             (Text)
 import qualified Data.Text                             as T
+import qualified Data.Text.Lazy                        as TL
 
 import           GHC.Err                               (undefined)
 import           GHC.Float                             (Double, Float)
 import           GHC.Generics                          (C1, Constructor, D1, Datatype (..), DecidedStrictness (..),
                                                         Generic (..), M1 (..), Meta (..), Rec0, S1, Selector (..),
                                                         type (:*:), type (:+:))
+import           GHC.Integer                           (Integer)
 import           GHC.Tuple                             (Unit)
 
 import           Typescript.Internal.Intermediate.Lang (FieldName (..), TSCollection (..), TSComposite (..),
@@ -135,7 +137,13 @@ instance TypescriptType t => TypescriptType (List t) where
 instance TypescriptType Text where
   toTSIntermediate _ = TSPrimitiveType TSString
 
+instance TypescriptType TL.Text where
+  toTSIntermediate _ = TSPrimitiveType TSString
+
 instance TypescriptType Int where
+  toTSIntermediate _ = TSPrimitiveType TSNumber
+
+instance TypescriptType Integer where
   toTSIntermediate _ = TSPrimitiveType TSNumber
 
 instance TypescriptType Double where
